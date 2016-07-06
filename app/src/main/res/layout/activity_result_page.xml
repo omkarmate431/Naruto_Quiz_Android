@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    android:orientation="vertical"
+    android:background="@color/colorForm"
+    tools:context="com.mate.narutoquiz.ResultPage"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/rogue_itachi"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/char_image"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:text="Congratulations"
+        android:id="@+id/congo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:text="Score is"
+        android:id="@+id/result"/>
+
+
+    <Button
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:text="Home"
+        android:id="@+id/homeBtn"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="70dp"
+        android:onClick="GoHome" />
+
+
+
+
+</LinearLayout>

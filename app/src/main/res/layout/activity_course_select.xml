@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    android:background="@color/colorForm"
+    android:orientation="vertical"
+    tools:context="com.mate.narutoquiz.CourseSelect">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        android:textSize="30sp"
+        android:id="@+id/greeting"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Course"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"/>
+    <Button
+        android:layout_width="150sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"
+        android:text="Genin"
+        android:id="@+id/geninBtn"
+        android:onClick="showGeninTerms" />
+    <Button
+        android:layout_width="150sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"
+        android:text="Chunin"
+        android:id="@+id/chuninBtn"
+        android:onClick="showChuninTerms" />
+    <Button
+        android:layout_width="150sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"
+        android:text="Jonin"
+        android:id="@+id/joninBtn"
+        android:onClick="showJoninTerms" />
+    <Button
+        android:layout_width="150sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="90dp"
+        android:text="Go Rogue"
+        android:id="@+id/rogueBtn"
+        android:onClick="showRogueTerms" />
+</LinearLayout>

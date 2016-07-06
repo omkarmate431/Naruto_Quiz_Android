@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="25dp"
+    android:orientation="vertical"
+    android:background="@color/colorForm"
+    tools:context="com.mate.narutoquiz.QuizPage"
+    android:weightSum="1">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="Class:"
+            android:id="@+id/level"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_marginLeft="140dp"
+            android:text="0/10"
+            android:id="@+id/questionCount"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:text="Sample"
+        android:id="@+id/question"/>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:rowCount="4"
+        android:layout_weight="0.58">
+
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:text="Sample"
+            android:id="@+id/option1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:onClick="CheckAnswer" />
+
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:text="Sample"
+            android:id="@+id/option2"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:clickable="false"
+            android:onClick="CheckAnswer" />
+
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:text="Sample"
+            android:id="@+id/option3"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:onClick="CheckAnswer" />
+
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:text="Sample"
+            android:id="@+id/option4"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:onClick="CheckAnswer" />
+
+
+    </GridLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Answer:"
+        android:id="@+id/solution"
+        android:textSize="20sp"
+        />
+</LinearLayout>
