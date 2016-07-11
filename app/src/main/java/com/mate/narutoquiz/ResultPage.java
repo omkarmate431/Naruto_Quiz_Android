@@ -27,7 +27,7 @@ public class ResultPage extends AppCompatActivity {
         String gender = intent.getStringExtra("gender");
 
         int score = intent.getIntExtra("score", 0);
-        result.setText("Score is " + score + "/10");
+        result.setText("Score is " + score + "/100");
         if (score == 10) {
             if (course.equals("genin")) {
                 character.setImageResource(R.mipmap.genin_naruto);

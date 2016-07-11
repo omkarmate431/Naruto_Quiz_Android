@@ -14,25 +14,31 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class QuizPage extends AppCompatActivity {
 
+    /*DECLARATIONS*/
+
     int question_count = 0;
-    int count_down=20;
+    int count_down=11;
     int score;
-    TextView question, level, solution,questionCount;
+    TextView question, level, solution,questionCount,timer_score;
     Button option1, option2, option3, option4;
     String answer;
     String name,clan,gender,course;
     String row[];
     QuizDbHelper dbHelper = new QuizDbHelper(this);
-
+    Timer timer = new Timer();     //Timer Object Created
     int[] arr = new int[10];
+    final Handler timerHandler = new Handler();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_page);
 
+        /*SETUP DATABASE*/
         try {
 
             dbHelper.createDataBase();
@@ -53,6 +59,8 @@ public class QuizPage extends AppCompatActivity {
 
         }
 
+        /*GET INTENT VALUES*/
+
         Intent intent = getIntent();
         course = intent.getStringExtra("course");
         score = intent.getIntExtra("score",0);
@@ -61,6 +69,33 @@ public class QuizPage extends AppCompatActivity {
         gender = intent.getStringExtra("gender");
 
 
+        /*SET TIMERTASK FUNCTION*/
+
+        final Runnable timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                timer_score.setText(""+count_down);
+                if(count_down==0)
+                {
+                    sendValues();
+                }
+            }
+        };
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                count_down=count_down-1;
+                timerHandler.post(timerRunnable);
+
+
+            }
+        };
+        timer.schedule(timerTask,0,1000);
+
+
+
+        /*SET QUESTION SEQUENCE*/
         question_count = intent.getIntExtra("question_count",0);
         if(question_count==0) {
             for (int i = 0; i < arr.length; i++) {
@@ -73,15 +108,20 @@ public class QuizPage extends AppCompatActivity {
         }
 
 
+        /*SET VIEWS*/
         question = (TextView) findViewById(R.id.question);
         level = (TextView) findViewById(R.id.level);
         solution = (TextView) findViewById(R.id.solution);
         questionCount = (TextView)findViewById(R.id.questionCount);
+        timer_score = (TextView)findViewById(R.id.timer_score);
         option1 = (Button) findViewById(R.id.option1);
         option2 = (Button) findViewById(R.id.option2);
         option3 = (Button) findViewById(R.id.option3);
         option4 = (Button) findViewById(R.id.option4);
-        questionCount.setText(question_count+1+"/10");
+
+        questionCount.setText(question_count+1+"/10");         //SET QUESTION COUNT VIEW
+
+        /*SET QUESTIONS AND ANSWER*/
         if(question_count<10) {
             switch (course) {
                 case "genin":
@@ -180,17 +220,19 @@ public class QuizPage extends AppCompatActivity {
 
     }
 
+
+    /*CHECK ANSWER*/
     public void CheckAnswer(View v) throws InterruptedException {
         Button b = (Button) v;
-        final Intent intent = new Intent(QuizPage.this,QuizPage.class);
-        Handler mHandler = new Handler();
+        timer.cancel();
+
         switch (b.getId()) {
             case R.id.option1:
                 if (b.getText().toString().equals(answer))
                 {
                     solution.setText("Answer: "+answer);
                     option1.setBackgroundColor(Color.GREEN);
-                    score++;
+                    score=score+count_down;
                 }
                 else
                 {
@@ -200,23 +242,7 @@ public class QuizPage extends AppCompatActivity {
                 findViewById(R.id.option2).setClickable(false);
                 findViewById(R.id.option3).setClickable(false);
                 findViewById(R.id.option4).setClickable(false);
-                question_count++;
-                intent.putExtra("score",score);
-                intent.putExtra("question_count",question_count);
-                intent.putExtra("course",course);
-                intent.putExtra("name",name);
-                intent.putExtra("clan",clan);
-                intent.putExtra("gender",gender);
-                intent.putExtra("sequence",arr);
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                    }
-
-                }, 1000L);
-
+                sendValues();
                 break;
 
             case R.id.option2:
@@ -224,7 +250,7 @@ public class QuizPage extends AppCompatActivity {
                 {
                     solution.setText("Answer: "+answer);
                     option2.setBackgroundColor(Color.GREEN);
-                    score++;
+                    score=score+count_down;
                 }
 
                 else
@@ -236,22 +262,7 @@ public class QuizPage extends AppCompatActivity {
                 findViewById(R.id.option1).setClickable(false);
                 findViewById(R.id.option3).setClickable(false);
                 findViewById(R.id.option4).setClickable(false);
-                question_count++;
-                intent.putExtra("score",score);
-                intent.putExtra("question_count",question_count);
-                intent.putExtra("course",course);
-                intent.putExtra("name",name);
-                intent.putExtra("clan",clan);
-                intent.putExtra("gender",gender);
-                intent.putExtra("sequence",arr);
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                    }
-
-                }, 1000L);
+                sendValues();
                 break;
 
             case R.id.option3:
@@ -259,7 +270,7 @@ public class QuizPage extends AppCompatActivity {
                 {
                     solution.setText("Answer: "+answer);
                     option3.setBackgroundColor(Color.GREEN);
-                    score++;
+                    score=score+count_down;
                 }
 
                 else
@@ -270,22 +281,7 @@ public class QuizPage extends AppCompatActivity {
                 findViewById(R.id.option1).setClickable(false);
                 findViewById(R.id.option2).setClickable(false);
                 findViewById(R.id.option4).setClickable(false);
-                question_count++;
-                intent.putExtra("score",score);
-                intent.putExtra("question_count",question_count);
-                intent.putExtra("course",course);
-                intent.putExtra("name",name);
-                intent.putExtra("clan",clan);
-                intent.putExtra("gender",gender);
-                intent.putExtra("sequence",arr);
-                mHandler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                    }
-
-                }, 1000L);
+                sendValues();
                 break;
 
             case R.id.option4:
@@ -293,7 +289,7 @@ public class QuizPage extends AppCompatActivity {
                 {
                     solution.setText("Answer: "+answer);
                     option4.setBackgroundColor(Color.GREEN);
-                    score++;
+                    score=score+count_down;
                 }
 
                 else
@@ -305,26 +301,14 @@ public class QuizPage extends AppCompatActivity {
                 findViewById(R.id.option2).setClickable(false);
                 findViewById(R.id.option3).setClickable(false);
 
-                question_count++;
-                intent.putExtra("score",score);
-                intent.putExtra("question_count",question_count);
-                intent.putExtra("course",course);
-                intent.putExtra("name",name);
-                intent.putExtra("clan",clan);
-                intent.putExtra("gender",gender);
-                intent.putExtra("sequence",arr);
-                mHandler.postDelayed(new Runnable() {
+                sendValues();
 
-                    @Override
-                    public void run() {
-                        startActivity(intent);
-                    }
-
-                }, 1000L);
                 break;
 
         }
     }
+
+    /*RANDOMIZE QUESTION SEQUENCE*/
     public static int[] RandomizeArray(int[] array){
         Random rgen = new Random();
 
@@ -338,9 +322,36 @@ public class QuizPage extends AppCompatActivity {
         return array;
     }
 
+    /*SET BACK BUTTON TO DO NOTHING*/
     @Override
     public void onBackPressed() {
 
     }
+
+    public void sendValues()
+    {
+        final Intent intent = new Intent(QuizPage.this,QuizPage.class);
+        Handler mHandler = new Handler();
+
+        solution.setText("Answer: "+answer);
+
+        question_count++;
+        intent.putExtra("score",score);
+        intent.putExtra("question_count",question_count);
+        intent.putExtra("course",course);
+        intent.putExtra("name",name);
+        intent.putExtra("clan",clan);
+        intent.putExtra("gender",gender);
+        intent.putExtra("sequence",arr);
+        mHandler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                startActivity(intent);
+            }
+
+        }, 1000L);
+    }
+
 }
 

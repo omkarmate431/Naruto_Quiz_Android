@@ -87,11 +87,24 @@
 
 
     </GridLayout>
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Answer:"
-        android:id="@+id/solution"
-        android:textSize="20sp"
-        />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Answer:"
+            android:id="@+id/solution"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:layout_marginLeft="200dp"
+            android:id="@+id/timer_score"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
 </LinearLayout>
