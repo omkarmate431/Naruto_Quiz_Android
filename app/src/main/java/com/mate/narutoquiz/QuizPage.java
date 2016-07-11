@@ -18,6 +18,7 @@ import java.util.Random;
 public class QuizPage extends AppCompatActivity {
 
     int question_count = 0;
+    int count_down=20;
     int score;
     TextView question, level, solution,questionCount;
     Button option1, option2, option3, option4;

@@ -29,11 +29,13 @@
         android:layout_height="50sp"
         android:hint="Your Name"
         android:id="@+id/fname"
+        android:singleLine="true"
         android:layout_marginTop="20dp" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:hint="Clan Name"
+        android:singleLine="true"
         android:id="@+id/cname"
         android:layout_marginTop="00dp" />
     <LinearLayout
