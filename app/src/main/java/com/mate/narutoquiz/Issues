@@ -1,0 +1,3 @@
+1.Random creating same sequence of questions
+2.Database not copied when changes are made.(So always copying the database)
+3.Improvements to be done in QuizDbHelper.java

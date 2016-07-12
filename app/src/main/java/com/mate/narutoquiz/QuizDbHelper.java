@@ -89,7 +89,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
 
         }
 
-        return checkDB != null ? true : false;
+        return checkDB != null ? false : false;
     }
 
     /**
@@ -295,6 +295,15 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         //cursor.moveToNext();
         return row;
 
+    }
+
+    public int getQuestionCount()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String countQuery="SELECT * FROM classA";
+        Cursor cursor = db.rawQuery(countQuery,null);
+        int count = cursor.getCount();
+        return count;
     }
 
 

@@ -11,9 +11,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,17 +26,22 @@ public class QuizPage extends AppCompatActivity {
 
     /*DECLARATIONS*/
 
-    int question_count = 0;
+    int question_no = 0;
     int count_down=11;
-    int score;
+    int score,question_count;
     TextView question, level, solution,questionCount,timer_score;
     Button option1, option2, option3, option4;
     String answer;
     String name,clan,gender,course;
     String row[];
+
     QuizDbHelper dbHelper = new QuizDbHelper(this);
-    Timer timer = new Timer();     //Timer Object Created
-    int[] arr = new int[10];
+
+    Set<Integer> question_set = new HashSet<>();    //Cannot have same question no
+    List<Integer> question_set_list;            //Set is converted and stored in this list as set cannot be accessed by index
+
+
+    Timer timer = new Timer();                  //Timer Object Created
     final Handler timerHandler = new Handler();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,7 @@ public class QuizPage extends AppCompatActivity {
 
         }
 
+        question_count=dbHelper.getQuestionCount();
         /*GET INTENT VALUES*/
 
         Intent intent = getIntent();
@@ -67,7 +78,7 @@ public class QuizPage extends AppCompatActivity {
         name = intent.getStringExtra("name");
         clan = intent.getStringExtra("clan");
         gender = intent.getStringExtra("gender");
-
+        question_no = intent.getIntExtra("question_no",0);
 
         /*SET TIMERTASK FUNCTION*/
 
@@ -95,18 +106,25 @@ public class QuizPage extends AppCompatActivity {
 
 
 
-        /*SET QUESTION SEQUENCE*/
-        question_count = intent.getIntExtra("question_count",0);
-        if(question_count==0) {
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] = i;
+        /*SET QUESTION SEQUENCE RANDOMLY*/
+
+        if(question_no==0) {
+            Random random = new Random();
+            while(question_set.size()<10)
+            {
+                int no = random.nextInt(question_count);
+                question_set.add(no);
+                System.out.println(no);
+
             }
-            RandomizeArray(arr);
         }
         else {
-            arr = intent.getIntArrayExtra("sequence");
+            question_set = (HashSet<Integer>)intent.getSerializableExtra("sequence");
+
         }
 
+        question_set_list = new ArrayList<>(question_set);      //Convert set to list
+        System.out.println("List :"+question_set_list);
 
         /*SET VIEWS*/
         question = (TextView) findViewById(R.id.question);
@@ -119,22 +137,23 @@ public class QuizPage extends AppCompatActivity {
         option3 = (Button) findViewById(R.id.option3);
         option4 = (Button) findViewById(R.id.option4);
 
-        questionCount.setText(question_count+1+"/10");         //SET QUESTION COUNT VIEW
+        questionCount.setText(question_no+1+"/10");         //SET QUESTION COUNT VIEW
 
         /*SET QUESTIONS AND ANSWER*/
-        if(question_count<10) {
+
+        if(question_no<10) {
             switch (course) {
                 case "genin":
 
-                    if(question_count<7)
+                    if(question_no<7)
                     {
                         level.setText("Class:D");
-                        row = dbHelper.retrieveQuestionD(arr[question_count]);
+                        row = dbHelper.retrieveQuestionD(question_set_list.get(question_no));
                     }
                     else
                     {
                         level.setText("Class:C");
-                        row = dbHelper.retrieveQuestionC(arr[question_count]);
+                        row = dbHelper.retrieveQuestionC(question_set_list.get(question_no));
                     }
                     question.setText(row[0]);
                     option1.setText(row[1]);
@@ -146,15 +165,15 @@ public class QuizPage extends AppCompatActivity {
                     break;
                 case "chunin":
 
-                    if(question_count<7)
+                    if(question_no<7)
                     {
                         level.setText("Class:C");
-                        row = dbHelper.retrieveQuestionC(arr[question_count]);
+                        row = dbHelper.retrieveQuestionC(question_set_list.get(question_no));
                     }
                     else
                     {
                         level.setText("Class:B");
-                        row = dbHelper.retrieveQuestionB(arr[question_count]);
+                        row = dbHelper.retrieveQuestionB(question_set_list.get(question_no));
                     }
                     question.setText(row[0]);
                     option1.setText(row[1]);
@@ -167,15 +186,15 @@ public class QuizPage extends AppCompatActivity {
 
                 case "jonin":
 
-                    if(question_count<5)
+                    if(question_no<5)
                     {
                         level.setText("Class:A");
-                        row = dbHelper.retrieveQuestionA(arr[question_count]);
+                        row = dbHelper.retrieveQuestionA(question_set_list.get(question_no));
                     }
                     else
                     {
                         level.setText("Class:S");
-                        row = dbHelper.retrieveQuestionS(arr[question_count]);
+                        row = dbHelper.retrieveQuestionS(question_set_list.get(question_no));
                     }
                     question.setText(row[0]);
                     option1.setText(row[1]);
@@ -188,15 +207,15 @@ public class QuizPage extends AppCompatActivity {
                 case "rogue":
 
                     level.setText("Class:S");
-                    if(question_count<7)
+                    if(question_no<7)
                     {
                         level.setText("Class:S");
-                        row = dbHelper.retrieveQuestionS(arr[question_count]);
+                        row = dbHelper.retrieveQuestionS(question_set_list.get(question_no));
                     }
                     else
                     {
                         level.setText("Class:A");
-                        row = dbHelper.retrieveQuestionA(arr[question_count]);
+                        row = dbHelper.retrieveQuestionA(question_set_list.get(question_no));
                     }
                     question.setText(row[0]);
                     option1.setText(row[1]);
@@ -207,8 +226,9 @@ public class QuizPage extends AppCompatActivity {
                     break;
             }
         }
-        else
+        else                                //Questions completed, proceed to result page
         {
+            timer.cancel();
             Intent intent1 = new Intent(QuizPage.this,ResultPage.class);
             intent1.putExtra("course",course);
             intent1.putExtra("score",score);
@@ -308,19 +328,7 @@ public class QuizPage extends AppCompatActivity {
         }
     }
 
-    /*RANDOMIZE QUESTION SEQUENCE*/
-    public static int[] RandomizeArray(int[] array){
-        Random rgen = new Random();
 
-        for (int i=0; i<array.length; i++) {
-            int randomPosition = rgen.nextInt(array.length);
-            int temp = array[i];
-            array[i] = array[randomPosition];
-            array[randomPosition] = temp;
-        }
-
-        return array;
-    }
 
     /*SET BACK BUTTON TO DO NOTHING*/
     @Override
@@ -328,6 +336,7 @@ public class QuizPage extends AppCompatActivity {
 
     }
 
+    /*Send values to next intent activity*/
     public void sendValues()
     {
         final Intent intent = new Intent(QuizPage.this,QuizPage.class);
@@ -335,14 +344,14 @@ public class QuizPage extends AppCompatActivity {
 
         solution.setText("Answer: "+answer);
 
-        question_count++;
+        question_no++;
         intent.putExtra("score",score);
-        intent.putExtra("question_count",question_count);
+        intent.putExtra("question_no",question_no);
         intent.putExtra("course",course);
         intent.putExtra("name",name);
         intent.putExtra("clan",clan);
         intent.putExtra("gender",gender);
-        intent.putExtra("sequence",arr);
+        intent.putExtra("sequence", (Serializable) question_set); //Typecast to serializable as set cannot be directly passed
         mHandler.postDelayed(new Runnable() {
 
             @Override

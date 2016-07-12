@@ -28,7 +28,7 @@ public class ResultPage extends AppCompatActivity {
 
         int score = intent.getIntExtra("score", 0);
         result.setText("Score is " + score + "/100");
-        if (score == 10) {
+        if (score >= 80) {
             if (course.equals("genin")) {
                 character.setImageResource(R.mipmap.genin_naruto);
                 congo.setText("Congratulations " + clan + " " + name + ", you are a Genin");
