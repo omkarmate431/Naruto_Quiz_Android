@@ -19,7 +19,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@mipmap/leafvillage"
+        android:src="@drawable/leafvillage"
         android:layout_marginLeft="110dp"
         android:layout_marginTop="20dp"
         android:id="@+id/logo"

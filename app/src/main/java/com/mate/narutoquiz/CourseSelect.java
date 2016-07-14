@@ -62,7 +62,7 @@ public class CourseSelect extends AppCompatActivity {
     public void showChuninTerms(View v)
     {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CourseSelect.this).setTitle("Terms for Chunin Exam")
-                .setMessage("To become a Chunin Ninja, you need to pass 3 C Class Quiz and 7 B Class Quiz.The Test will began immediately.")
+                .setMessage("To become a Chunin, you need to pass 3 C Class Quiz and 7 B Class Quiz.The Test will began immediately.")
                 .setPositiveButton("Accept", new DialogInterface.OnClickListener()
                 {
                     @Override

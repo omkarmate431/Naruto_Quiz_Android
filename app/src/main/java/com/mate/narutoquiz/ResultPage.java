@@ -30,22 +30,22 @@ public class ResultPage extends AppCompatActivity {
         result.setText("Score is " + score + "/100");
         if (score >= 80) {
             if (course.equals("genin")) {
-                character.setImageResource(R.mipmap.genin_naruto);
+                character.setImageResource(R.drawable.genin_naruto);
                 congo.setText("Congratulations " + clan + " " + name + ", you are a Genin");
             } else if (course.equals("chunin")) {
-                character.setImageResource(R.mipmap.chunin_neji);
+                character.setImageResource(R.drawable.chunin_neji);
                 congo.setText("Congratulations " + clan + " " + name + ", you are a Chunin");
             } else if (course.equals("jonin")) {
-                character.setImageResource(R.mipmap.jonin_kakashi);
+                character.setImageResource(R.drawable.jonin_kakashi);
                 congo.setText("Congratulations " + clan + " " + name + ", you are a Jonin");
             } else if (course.equals("rogue")) {
-                character.setImageResource(R.mipmap.rogue_itachi);
+                character.setImageResource(R.drawable.rogue_itachi);
                 congo.setText("Congratulations " + clan + " " + name + ", you are a Rogue Ninja");
             }
 
         }
         else {
-            character.setImageResource(R.mipmap.fail_naruto);
+            character.setImageResource(R.drawable.fail_naruto);
             congo.setText("You failed");
         }
     }

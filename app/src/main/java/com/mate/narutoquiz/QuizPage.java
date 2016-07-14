@@ -127,6 +127,7 @@ public class QuizPage extends AppCompatActivity {
         System.out.println("List :"+question_set_list);
 
         /*SET VIEWS*/
+
         question = (TextView) findViewById(R.id.question);
         level = (TextView) findViewById(R.id.level);
         solution = (TextView) findViewById(R.id.solution);
@@ -155,12 +156,6 @@ public class QuizPage extends AppCompatActivity {
                         level.setText("Class:C");
                         row = dbHelper.retrieveQuestionC(question_set_list.get(question_no));
                     }
-                    question.setText(row[0]);
-                    option1.setText(row[1]);
-                    option2.setText(row[2]);
-                    option3.setText(row[3]);
-                    option4.setText(row[4]);
-                    answer = row[5];
 
                     break;
                 case "chunin":
@@ -175,12 +170,6 @@ public class QuizPage extends AppCompatActivity {
                         level.setText("Class:B");
                         row = dbHelper.retrieveQuestionB(question_set_list.get(question_no));
                     }
-                    question.setText(row[0]);
-                    option1.setText(row[1]);
-                    option2.setText(row[2]);
-                    option3.setText(row[3]);
-                    option4.setText(row[4]);
-                    answer = row[5];
 
                     break;
 
@@ -196,12 +185,7 @@ public class QuizPage extends AppCompatActivity {
                         level.setText("Class:S");
                         row = dbHelper.retrieveQuestionS(question_set_list.get(question_no));
                     }
-                    question.setText(row[0]);
-                    option1.setText(row[1]);
-                    option2.setText(row[2]);
-                    option3.setText(row[3]);
-                    option4.setText(row[4]);
-                    answer = row[5];
+
                     break;
 
                 case "rogue":
@@ -217,14 +201,14 @@ public class QuizPage extends AppCompatActivity {
                         level.setText("Class:A");
                         row = dbHelper.retrieveQuestionA(question_set_list.get(question_no));
                     }
-                    question.setText(row[0]);
-                    option1.setText(row[1]);
-                    option2.setText(row[2]);
-                    option3.setText(row[3]);
-                    option4.setText(row[4]);
-                    answer = row[5];
                     break;
             }
+            question.setText(row[0]);
+            option1.setText(row[1]);
+            option2.setText(row[2]);
+            option3.setText(row[3]);
+            option4.setText(row[4]);
+            answer = row[5];
         }
         else                                //Questions completed, proceed to result page
         {
